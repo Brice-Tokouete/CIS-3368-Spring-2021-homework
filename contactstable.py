@@ -6,6 +6,7 @@ from datetime import date
 import mysql.connector
 from mysql.connector import Error
 
+
 # defined the creation of the connection to the database from inclass example
 def create_connection(host_name, user_name, user_password, db_name):
     connection = None
@@ -49,7 +50,38 @@ connection = create_connection("cis3368.c3rczxv5d35n.us-east-1.rds.amazonaws.com
 cDate = datetime.datetime(2019,3,20)
 str_cDate = cDate.date().isoformat()
 query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('McSauer','Mike','President of Student Council','"+str_cDate+"')"
- 
+#execute_query(connection, query)  
 
-select_contacts = "SELECT * FROM contacts"
-contacts = execute_read_query(connection, select_contacts)
+# create menu list for the contacts table database
+menu = ('MENU\n'
+        'a - Add contact\n'
+        'd - Remove contact\n'
+        'u - Update contact details\n'
+        'b - Output all contacts in alphabetical order\n'
+        'c - Output all contacts by creation date\n'
+        'o - Output all contacts\n'
+        'q - Quit\n')
+
+option = ''
+while option != 'q':
+    print(menu)
+    option = input('Choose an option:')
+    
+    # add a new contact to the contact table
+    if option == 'a':
+        cDate = datetime.datetime(2020,10,20)
+        str_cDate = cDate.date().isoformat()
+        lastname = input('Enter lastname:\n')
+        firstname = input('Enter firstname\n')
+        contactDetails = input('Enter contact details\n')
+        creationDate = input('Enter date\n')
+        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','"+str_cDate+"')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
+    #execute_query(connection, query)
+
+    # remove a contact from the contact table
+    elif option == 'd':
+        contact_remove = input('Enter id number:\n')
+        delete_query = 'DELETE FROM contacts WHERE id = %s' % (contact_remove)
+        execute_query(connection, delete_query)
+
+
