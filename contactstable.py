@@ -65,7 +65,7 @@ menu = ('MENU\n'
 option = ''
 while option != 'q':
     print(menu)
-    option = input('Choose an option:')
+    option = input('Choose an option: ')
     
     # add a new contact to the contact table
     if option == 'a':
@@ -75,13 +75,27 @@ while option != 'q':
         firstname = input('Enter firstname\n')
         contactDetails = input('Enter contact details\n')
         creationDate = input('Enter date\n')
-        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','"+str_cDate+"')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
-    #execute_query(connection, query)
+        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','" + str_cDate + "')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
+        execute_query(connection, query)
 
     # remove a contact from the contact table
     elif option == 'd':
         contact_remove = input('Enter id number:\n')
         delete_query = 'DELETE FROM contacts WHERE id = %s' % (contact_remove)
         execute_query(connection, delete_query)
+
+    # update contact details
+    elif option == 'u':
+        new_contactDetails = input('Enter new contact details:\n')
+        update_contactDetails_query = "UPDATE contacts SET contactDetails = '%s' WHERE id = 4 " % (new_contactDetails)
+        execute_query(connection, update_contactDetails_query)
+
+    # output all contacts
+    elif option == 'o':
+        select_contacts = 'SELECT * FROM contacts'
+        contacts = execute_read_query(connection, select_contacts)
+
+        for contact in contacts:
+            print(contact)
 
 
