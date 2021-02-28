@@ -49,7 +49,7 @@ connection = create_connection("cis3368.c3rczxv5d35n.us-east-1.rds.amazonaws.com
 # create a new contact to the contactstable
 cDate = datetime.datetime(2019,3,20)
 str_cDate = cDate.date().isoformat()
-query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('McSauer','Mike','President of Student Council','"+str_cDate+"')"
+query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('McDonald','Ryan','Assistant professor at UNC','"+str_cDate+"')"
 #execute_query(connection, query)  
 
 # create menu list for the contacts table database
@@ -75,7 +75,7 @@ while option != 'q':
         firstname = input('Enter firstname\n')
         contactDetails = input('Enter contact details\n')
         creationDate = input('Enter date\n')
-        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','" + str_cDate + "')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
+        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','" +str_cDate+ "')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
         execute_query(connection, query)
 
     # remove a contact from the contact table
@@ -87,7 +87,7 @@ while option != 'q':
     # update contact details
     elif option == 'u':
         new_contactDetails = input('Enter new contact details:\n')
-        update_contactDetails_query = "UPDATE contacts SET contactDetails = '%s' WHERE id = 4 " % (new_contactDetails)
+        update_contactDetails_query = "UPDATE contacts SET contactDetails = '%s' WHERE id = 8 " % (new_contactDetails)
         execute_query(connection, update_contactDetails_query)
 
     # output all contacts
@@ -97,5 +97,21 @@ while option != 'q':
 
         for contact in contacts:
             print(contact)
+
+    # output all contacts in alphabetical order
+    elif option == 'b':
+        select_lastname = 'SELECT * FROM contacts ORDER BY lastname'
+        contacts = execute_read_query(connection, select_lastname)
+
+        for contact in contacts:
+            print(contact)
+
+    # output all contacts by creation dade
+    elif option == 'c':
+        select_creationDate = 'SELECT * FROM contacts ORDER BY creationDate'
+        contacts = execute_read_query(connection, select_creationDate)
+        for contact in contacts:
+            print(contact)
+
 
 
