@@ -69,14 +69,14 @@ while option != 'q':
     
     # add a new contact to the contact table
     if option == 'a':
-        cDate = datetime.datetime(2020,10,20)
+        cDate = datetime.datetime(2019,3,20)
         str_cDate = cDate.date().isoformat()
         lastname = input('Enter lastname:\n')
         firstname = input('Enter firstname\n')
         contactDetails = input('Enter contact details\n')
         creationDate = input('Enter date\n')
-        query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s','%s','%s','" +str_cDate+ "')" % (lastname, firstname, contactDetails, creationDate, str_cDate)
-        execute_query(connection, query)
+        add_query = "INSERT INTO contacts (lastname, firstname, contactDetails, creationDate) VALUES ('%s', '%s', '%s',%s)" % (lastname, firstname, contactDetails, creationDate)
+        execute_query(connection, add_query)
 
     # remove a contact from the contact table
     elif option == 'd':
@@ -87,7 +87,8 @@ while option != 'q':
     # update contact details
     elif option == 'u':
         new_contactDetails = input('Enter new contact details:\n')
-        update_contactDetails_query = "UPDATE contacts SET contactDetails = '%s' WHERE id = 8 " % (new_contactDetails)
+        contact_id = input('Enter id number:\n')
+        update_contactDetails_query = "UPDATE contacts SET contactDetails = '%s' WHERE id = %s " % (new_contactDetails, contact_id)
         execute_query(connection, update_contactDetails_query)
 
     # output all contacts
